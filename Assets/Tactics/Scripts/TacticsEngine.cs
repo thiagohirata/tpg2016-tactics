@@ -82,7 +82,6 @@ public class TacticsEngine : MonoBehaviour {
             stateMachine.SetTrigger("Cancelar");
 
         }
-
     }
 
     /// <summary>
@@ -154,5 +153,14 @@ public class TacticsEngine : MonoBehaviour {
             //avança o state machine
             stateMachine.SetTrigger("MovimentoSelecionado");
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SelecionarAcao()
+    {
+        stateMachine.SetTrigger("AcaoSelecionada");
+        GetComponent<SaveDataManager>().Save();
     }
 }
