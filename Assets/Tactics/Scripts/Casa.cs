@@ -11,13 +11,10 @@ public class Casa : MonoBehaviour {
 	void Start () {
 	    
 	}
-	
-	/// <summary>
-    /// Esta solução parece que funciona, mas não funciona!
-    /// </summary>
-	void Update () {
-        if(posicaoPossivel)
-        {
+
+    IEnumerator VoltarAoEstadoInativo () {
+        yield return new WaitForEndOfFrame();
+        while (posicaoPossivel) { 
             //uma vez é marcado como posição possível,
             //fica verificando a cada frame se ela ainda
             //é uma posição possível - e desabilita quando não
@@ -28,8 +25,10 @@ public class Casa : MonoBehaviour {
                 //mudou de estado - não é mais uma posição possível
                 posicaoPossivel = false;
                 transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(false);
+                transform.FindChild("Indicacao").gameObject.SetActive(false);
                 GetComponent<MostraIndicacaoOnMouseHover>().enabled = false;
             }
+            yield return new WaitForEndOfFrame();
         }
 	}
 
@@ -42,5 +41,6 @@ public class Casa : MonoBehaviour {
         posicaoPossivel = true;
         transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(true);
         GetComponent<MostraIndicacaoOnMouseHover>().enabled = true;
+        StartCoroutine(VoltarAoEstadoInativo());
     }
 }

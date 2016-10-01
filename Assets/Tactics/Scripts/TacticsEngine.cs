@@ -15,11 +15,13 @@ public class TacticsEngine : MonoBehaviour {
     public Time timeAtual;
     public IDictionary<Vector3, Casa> tabuleiro;
 
+    public Personagem personagemSelecionado;
+
     void Awake()
     {
         stateMachine = GetComponent<Animator>();
 
-        if(TacticsEngine.main == null)
+        if (TacticsEngine.main == null)
         {
             TacticsEngine.main = this;
         } else
@@ -48,14 +50,14 @@ public class TacticsEngine : MonoBehaviour {
             {
                 tabuleiro.Add(c.transform.position, c);
             }
-                
+
         }
     }
 
     void Update()
     {
         //cancelar operação atual (pode ser, por exemplo, cancelar a seleção de um personagem)
-        if(Input.GetButton("Cancel"))
+        if (Input.GetButton("Cancel"))
         {
             stateMachine.SetTrigger("Cancelar");
         }
@@ -67,7 +69,7 @@ public class TacticsEngine : MonoBehaviour {
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>
-    public bool IsCurrentState(string state) 
+    public bool IsCurrentState(string state)
     {
         return stateMachine.GetCurrentAnimatorStateInfo(0).IsTag(state);
     }
@@ -78,9 +80,8 @@ public class TacticsEngine : MonoBehaviour {
     /// <param name="personagem"></param>
     public void SelecionarPersonagem(Personagem personagem)
     {
-        if(IsCurrentState(STATE_ESCOLHER_PERSONAGEM) && personagem.time == this.timeAtual)
+        if (IsCurrentState(STATE_ESCOLHER_PERSONAGEM) && personagem.time == this.timeAtual)
         {
-            stateMachine.SetTrigger("PersonagemSelecionado");
 
             //TODO: calcular as Casas de destino possíveis para o personagem
             //vou deixar bem simples, por enquanto - pode andar 1 posição
@@ -94,16 +95,25 @@ public class TacticsEngine : MonoBehaviour {
                 posicaoDoPersonagem + new Vector3(0, 0, -1)};
 
             //agora, habilitar as casas das posições possíveis
-            foreach(Vector3 posicaoPossivel in posicoesPossiveis)
+            foreach (Vector3 posicaoPossivel in posicoesPossiveis)
             {
-                if(tabuleiro.ContainsKey(posicaoPossivel))
+                if (tabuleiro.ContainsKey(posicaoPossivel))
                 {
                     Casa casa = tabuleiro[posicaoPossivel];
                     casa.MarcarComoPosicaoPossivel();
                 }
             }
 
-            
+            stateMachine.SetTrigger("PersonagemSelecionado");
+        }
+    }
+
+    public void SelecionarCasa(Casa casa)
+    {
+        if (IsCurrentState(STATE_ESCOLHER_MOVIMENTO))
+        {
+
+            stateMachine.SetTrigger("MovimentoSelecionado");
         }
     }
 }
