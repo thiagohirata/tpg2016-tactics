@@ -4,6 +4,10 @@ using UnityEngine.EventSystems;
 
 public class MostraIndicacaoOnMouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    void Update()
+    {
+
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.FindChild("Indicacao").gameObject.SetActive(true);
