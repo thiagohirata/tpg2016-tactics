@@ -16,6 +16,7 @@ public class Casa : MonoBehaviour, IPointerClickHandler
 
     IEnumerator VoltarAoEstadoInativo () {
         yield return new WaitForEndOfFrame();
+
         while (posicaoPossivel) { 
             //uma vez é marcado como posição possível,
             //fica verificando a cada frame se ela ainda
@@ -24,16 +25,17 @@ public class Casa : MonoBehaviour, IPointerClickHandler
             //mais selecionar movimento)
             if(!TacticsEngine.main.IsCurrentState(TacticsEngine.STATE_ESCOLHER_MOVIMENTO))
             {
-                //mudou de estado - não é mais uma posição possível
-                posicaoPossivel = false;
-                transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(false);
-                transform.FindChild("Indicacao").gameObject.SetActive(false);
-                GetComponent<Collider>().enabled = false;
-                GetComponent<MostraIndicacaoOnMouseHover>().enabled = false;
+                break;
             }
             yield return new WaitForEndOfFrame();
         }
-	}
+        //mudou de estado - não é mais uma posição possível
+        posicaoPossivel = false;
+        transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(false);
+        transform.FindChild("Indicacao").gameObject.SetActive(false);
+        GetComponent<Collider>().enabled = false;
+        GetComponent<MostraIndicacaoOnMouseHover>().enabled = false;
+    }
 
     /// <summary>
     /// Chamado por TacticsEngine quando determinar que esta casa é

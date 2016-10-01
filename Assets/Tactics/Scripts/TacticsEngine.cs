@@ -19,7 +19,14 @@ public class TacticsEngine : MonoBehaviour {
     /// As próximas variáveis indicam o status do movimento de personagem atual.
     /// </summary>
     public Personagem personagemSelecionado;
+    /// <summary>
+    /// Guarda posição inicial do personagem
+    /// </summary>
     public Vector3 posicaoOriginal;
+    /// <summary>
+    /// Guarda posições selecionáveis
+    /// </summary>
+    public List<Casa> posicoesSelecionaveis;
 
     void Awake()
     {
@@ -87,6 +94,8 @@ public class TacticsEngine : MonoBehaviour {
         if (IsCurrentState(STATE_ESCOLHER_PERSONAGEM) && personagem.time == this.timeAtual)
         {
             this.personagemSelecionado = personagem;
+            this.posicoesSelecionaveis = new List<Casa>();
+            this.posicaoOriginal = personagem.transform.position;
 
             //TODO: calcular as Casas de destino possíveis para o personagem
             //vou deixar bem simples, por enquanto - pode andar 1 posição
@@ -106,10 +115,22 @@ public class TacticsEngine : MonoBehaviour {
                 {
                     Casa casa = tabuleiro[posicaoPossivel];
                     casa.MarcarComoPosicaoPossivel();
+                    posicoesSelecionaveis.Add(casa);
                 }
             }
 
             stateMachine.SetTrigger("PersonagemSelecionado");
+        }
+    }
+
+    public void VoltarSelecionarMovimento()
+    {
+        //restaura modo selecionar movimento
+        personagemSelecionado.transform.position = posicaoOriginal;
+        //agora, habilitar as casas das posições possíveis
+        foreach (Casa casa in posicoesSelecionaveis)
+        {
+            casa.MarcarComoPosicaoPossivel();
         }
     }
 
