@@ -1,15 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MostraIndicacaoOnMouseHover : MonoBehaviour {
+public class MostraIndicacaoOnMouseHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        transform.FindChild("Indicacao").gameObject.SetActive(true);
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.FindChild("Indicacao").gameObject.SetActive(false);
+    }
 }
