@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
-public class Casa : MonoBehaviour {
+public class Casa : MonoBehaviour, IPointerClickHandler
+{
     /// <summary>
     /// Ver MarcarcomoPosicaoPossivel
     /// </summary>
@@ -26,6 +28,7 @@ public class Casa : MonoBehaviour {
                 posicaoPossivel = false;
                 transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(false);
                 transform.FindChild("Indicacao").gameObject.SetActive(false);
+                GetComponent<Collider>().enabled = false;
                 GetComponent<MostraIndicacaoOnMouseHover>().enabled = false;
             }
             yield return new WaitForEndOfFrame();
@@ -41,6 +44,17 @@ public class Casa : MonoBehaviour {
         posicaoPossivel = true;
         transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(true);
         GetComponent<MostraIndicacaoOnMouseHover>().enabled = true;
+        GetComponent<Collider>().enabled = true; //com collider desabilitado por padrão, OnPointerClick não é chamado
         StartCoroutine(VoltarAoEstadoInativo());
+    }
+
+
+    /// <summary>
+    /// Chamado quando clica na casa (ver https://docs.unity3d.com/Manual/SupportedEvents.html)
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        TacticsEngine.main.SelecionarCasa(this);
     }
 }

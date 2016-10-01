@@ -15,7 +15,11 @@ public class TacticsEngine : MonoBehaviour {
     public Time timeAtual;
     public IDictionary<Vector3, Casa> tabuleiro;
 
+    /// <summary>
+    /// As próximas variáveis indicam o status do movimento de personagem atual.
+    /// </summary>
     public Personagem personagemSelecionado;
+    public Vector3 posicaoOriginal;
 
     void Awake()
     {
@@ -57,7 +61,7 @@ public class TacticsEngine : MonoBehaviour {
     void Update()
     {
         //cancelar operação atual (pode ser, por exemplo, cancelar a seleção de um personagem)
-        if (Input.GetButton("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
         {
             stateMachine.SetTrigger("Cancelar");
         }
@@ -82,6 +86,7 @@ public class TacticsEngine : MonoBehaviour {
     {
         if (IsCurrentState(STATE_ESCOLHER_PERSONAGEM) && personagem.time == this.timeAtual)
         {
+            this.personagemSelecionado = personagem;
 
             //TODO: calcular as Casas de destino possíveis para o personagem
             //vou deixar bem simples, por enquanto - pode andar 1 posição
@@ -112,7 +117,10 @@ public class TacticsEngine : MonoBehaviour {
     {
         if (IsCurrentState(STATE_ESCOLHER_MOVIMENTO))
         {
+            //"movimenta" o personagem para o destino
+            personagemSelecionado.transform.position = casa.transform.position;
 
+            //avança o state machine
             stateMachine.SetTrigger("MovimentoSelecionado");
         }
     }
