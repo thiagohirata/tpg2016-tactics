@@ -70,7 +70,17 @@ public class TacticsEngine : MonoBehaviour {
         //cancelar operação atual (pode ser, por exemplo, cancelar a seleção de um personagem)
         if (Input.GetButtonDown("Cancel"))
         {
+            if (IsCurrentState(STATE_ESCOLHER_MOVIMENTO))
+            {
+                if (personagemSelecionado != null)
+                {
+                    personagemSelecionado.transform.FindChild("Indicacao").gameObject.SetActive(false);
+                    personagemSelecionado = null;
+                }
+
+            }
             stateMachine.SetTrigger("Cancelar");
+
         }
 
     }

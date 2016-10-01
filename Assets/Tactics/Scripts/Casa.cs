@@ -35,6 +35,7 @@ public class Casa : MonoBehaviour, IPointerClickHandler
         transform.FindChild("Indicacao").gameObject.SetActive(false);
         GetComponent<Collider>().enabled = false;
         GetComponent<MostraIndicacaoOnMouseHover>().enabled = false;
+        yield return new WaitForEndOfFrame();
     }
 
     /// <summary>
