@@ -27,6 +27,14 @@ public class TacticsEngine : MonoBehaviour {
     /// Guarda posições selecionáveis
     /// </summary>
     public List<Casa> posicoesSelecionaveis;
+    /// <summary>
+    /// Guarda o comando selecionado
+    /// </summary>
+    public Comando comandoSelecionado;
+    /// <summary>
+    /// Guarda posições que podem ser atacadas a partir do ataque selecionado
+    /// </summary>
+    public List<Casa> alvosSelecionaveis;
 
     void Awake()
     {
@@ -161,6 +169,5 @@ public class TacticsEngine : MonoBehaviour {
     public void SelecionarAcao()
     {
         stateMachine.SetTrigger("AcaoSelecionada");
-        GetComponent<SaveDataManager>().Save();
     }
 }

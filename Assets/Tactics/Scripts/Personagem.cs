@@ -7,6 +7,7 @@ public class Personagem : MonoBehaviour, IPointerClickHandler {
     public TacticsEngine.Time time;
     private TacticsEngine tacticsEngine;
     private MostraIndicacaoOnMouseHover mostraIndicacaoOnMouseHover;
+    public ClassePersonagem classePersonagem;
 
     // Use this for initialization
     void Start () {
