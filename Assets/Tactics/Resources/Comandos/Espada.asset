@@ -9,8 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c0adbb036f1bda4b89f8281008d6278, type: 3}
-  m_Name: AtaqueSimples
+  m_Name: Espada
   m_EditorClassIdentifier: 
-  nome: 
-  alcance: 0
-  dano: 0
+  nome: Espada
+  alcance: 1
+  dano: 2
+  chanceDeAcerto: 1

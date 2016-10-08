@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f12c100505a1b40854e871f18a13d5, type: 3}
   m_Name: Mago
   m_EditorClassIdentifier: 
-  comando1: {fileID: 0}
-  comando2: {fileID: 0}
-  hp: 0
-  movimento: 0
+  comando1: {fileID: 11400000, guid: 4bd741f79aa059843bfa8b1fac4e3424, type: 2}
+  comando2: {fileID: 11400000, guid: 1ed17b28e6a533249b99f382edb69468, type: 2}
+  hp: 5
+  movimento: 1

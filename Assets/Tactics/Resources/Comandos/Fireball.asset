@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0adbb036f1bda4b89f8281008d6278, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
-  nome: 
-  alcance: 0
-  dano: 0
+  nome: Bola de fogo
+  alcance: 8
+  dano: 5
+  chanceDeAcerto: 1

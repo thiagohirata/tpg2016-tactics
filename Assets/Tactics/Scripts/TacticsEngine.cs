@@ -166,7 +166,7 @@ public class TacticsEngine : MonoBehaviour {
     /// <summary>
     /// 
     /// </summary>
-    public void SelecionarAcao()
+    public void SelecionarAcao(int indiceAcao)
     {
         stateMachine.SetTrigger("AcaoSelecionada");
     }
