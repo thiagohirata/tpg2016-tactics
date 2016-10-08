@@ -8,6 +8,7 @@ public class Casa : MonoBehaviour, IPointerClickHandler
     /// Ver MarcarcomoPosicaoPossivel
     /// </summary>
     private bool posicaoPossivel;
+    private bool alvoPossivel;
 
 	// Use this for initialization
 	void Start () {
@@ -29,9 +30,24 @@ public class Casa : MonoBehaviour, IPointerClickHandler
             }
             yield return new WaitForEndOfFrame();
         }
+        while (alvoPossivel)
+        {
+            //uma vez é marcado como posição possível,
+            //fica verificando a cada frame se ela ainda
+            //é uma posição possível - e desabilita quando não
+            //não for mais (ex: o status da state machine não é
+            //mais selecionar movimento)
+            if (!TacticsEngine.main.IsCurrentState("EscolherAlvoAtaque"))
+            {
+                break;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
         //mudou de estado - não é mais uma posição possível
         posicaoPossivel = false;
         transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(false);
+        transform.FindChild("IndicacaoAlvoAtaque").gameObject.SetActive(false);
         transform.FindChild("Indicacao").gameObject.SetActive(false);
         GetComponent<Collider>().enabled = false;
         GetComponent<MostraIndicacaoOnMouseHover>().enabled = false;
@@ -46,6 +62,15 @@ public class Casa : MonoBehaviour, IPointerClickHandler
     {
         posicaoPossivel = true;
         transform.FindChild("IndicacaoSelecionavel").gameObject.SetActive(true);
+        GetComponent<MostraIndicacaoOnMouseHover>().enabled = true;
+        GetComponent<Collider>().enabled = true; //com collider desabilitado por padrão, OnPointerClick não é chamado
+        StartCoroutine(VoltarAoEstadoInativo());
+    }
+
+    public void MarcarComoAlvoPossivel()
+    {
+        alvoPossivel = true;
+        transform.FindChild("IndicacaoAlvoAtaque").gameObject.SetActive(true);
         GetComponent<MostraIndicacaoOnMouseHover>().enabled = true;
         GetComponent<Collider>().enabled = true; //com collider desabilitado por padrão, OnPointerClick não é chamado
         StartCoroutine(VoltarAoEstadoInativo());

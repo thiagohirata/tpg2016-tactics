@@ -168,6 +168,24 @@ public class TacticsEngine : MonoBehaviour {
     /// </summary>
     public void SelecionarAcao(int indiceAcao)
     {
+        //lembre que estamos pegando a posição da unity, mas vamos
+        //só considerar o pos.x e o pos.z
+        Vector3 posicaoDoPersonagem = personagemSelecionado.transform.position;
+        Vector3[] posicoesPossiveis = new Vector3[] { posicaoDoPersonagem + new Vector3(1, 0, 0),
+                posicaoDoPersonagem + new Vector3(-1, 0, 0),
+                posicaoDoPersonagem + new Vector3(0, 0, 1),
+                posicaoDoPersonagem + new Vector3(0, 0, -1)};
+
+        //agora, habilitar as casas das posições possíveis
+        foreach (Vector3 alvoPossivel in posicoesPossiveis)
+        {
+            if (tabuleiro.ContainsKey(alvoPossivel))
+            {
+                Casa casa = tabuleiro[alvoPossivel];
+                casa.MarcarComoAlvoPossivel();
+            }
+        }
         stateMachine.SetTrigger("AcaoSelecionada");
+
     }
 }
